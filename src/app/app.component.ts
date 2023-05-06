@@ -33,40 +33,6 @@ export class AppComponent {
     this.background = this.isChecked ? '#2f8f50' : '#405ac2';
   }
 
-  ngOnInit() {
-    let initialFormUsers = [
-      {
-        id: 1, // генерується автоматично
-        name: 'Djamshut', // текстове поле (обов'язкове поле)
-        lastname: 'Mamaev', // текстове поле (обов'язкове поле)
-        type: 'Type B', // селект або радіобатони
-        email: 'mail@mail.com', // текстове поле з валідатором
-        password: 'Helloworld1!', // текстове поле з валідатором (обов'язкове
-        confirmPassword: 'Helloworld1!', // текстове поле з валідатором
-        subjects: ['1', '2', '3'], // FormArray
-        description: 'gbnfgb', // textarea
-        sex: 'MALE', // checkbox
-        phone: '380453453454' // текстове поле з валідатором
-      },
-      {
-        id: 2, // генерується автоматично
-        name: 'Victor', // текстове поле (обов'язкове поле)
-        lastname: 'Velichko', // текстове поле (обов'язкове поле)
-        type: 'Type C', // селект або радіобатони
-        email: 'mail@mail.com', // текстове поле з валідатором
-        password: 'Helloworld1!', // текстове поле з валідатором (обов'язкове
-        confirmPassword: 'Helloworld1!', // текстове поле з валідатором
-        subjects: ['1', '2', '3'], // FormArray
-        description: '', // textarea
-        sex: 'MALE', // checkbox
-        phone: '380453453454' // текстове поле з валідатором
-      }
-    ]
-    const users = JSON.stringify(initialFormUsers);
-    localStorage.setItem('users', users);
-    this.userList = this.userService.getUsers();
-  }
-
   get allUsers(): any {
     return JSON.parse(localStorage.getItem('users') || '[]');
   }
@@ -76,7 +42,7 @@ export class AppComponent {
   openModal(): void {
     const dialogRef = this.dialog.open(ModalComponentComponent, {
       width: `${this.sliderValue}px`,
-      data: { count: this.formUsers.length, width: this.sliderValue }
+      data: { count: this.allUsers.length, width: this.sliderValue }
     });
 
     dialogRef.afterClosed().subscribe(result => {});
@@ -121,35 +87,6 @@ export class AppComponent {
       this.fruits[index].name = value;
     }
   }
-
-  formUsers = [
-    {
-      id: 1, // генерується автоматично
-      name: 'Djamshut', // текстове поле (обов'язкове поле)
-      lastname: 'Mamaev', // текстове поле (обов'язкове поле)
-      type: 'Type B', // селект або радіобатони
-      email: 'mail@mail.com', // текстове поле з валідатором
-      password: 'Helloworld1!', // текстове поле з валідатором (обов'язкове
-      confirmPassword: 'Helloworld1!', // текстове поле з валідатором
-      subjects: ['1', '2', '3'], // FormArray
-      description: 'gbnfgb', // textarea
-      sex: 'MALE', // checkbox
-      phone: '380453453454' // текстове поле з валідатором
-    },
-    {
-      id: 2, // генерується автоматично
-      name: 'Victor', // текстове поле (обов'язкове поле)
-      lastname: 'Velichko', // текстове поле (обов'язкове поле)
-      type: 'Type C', // селект або радіобатони
-      email: 'mail@mail.com', // текстове поле з валідатором
-      password: 'Helloworld1!', // текстове поле з валідатором (обов'язкове
-      confirmPassword: 'Helloworld1!', // текстове поле з валідатором
-      subjects: ['1', '2', '3'], // FormArray
-      description: '', // textarea
-      sex: 'MALE', // checkbox
-      phone: '380453453454' // текстове поле з валідатором
-    }
-  ]
 
   fb = new FormBuilder();
 
@@ -322,24 +259,3 @@ export class AppComponent {
     this.usersForm.setErrors(null);
   }
 }
-
-// @Component({
-//   selector: 'app-modal',
-//   template: `
-//     <h2 mat-dialog-title>{{data.name}}</h2>
-//     <div mat-dialog-content>
-//       <p><strong>Age:</strong> {{data.age}}</p>
-//       <p><strong>Email:</strong> {{data.email}}</p>
-//     </div>
-//     <div mat-dialog-actions>
-//       <button mat-button (click)="close()">Close</button>
-//     </div>
-//   `,
-// })
-// export class AppComponentDialog {
-//   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
-//
-//   close(): void {
-//     // You can do something here when the user clicks "Close"
-//   }
-// }
